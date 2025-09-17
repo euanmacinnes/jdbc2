@@ -2,8 +2,9 @@
 jdbc2 package initializer.
 
 - Re-exports primary DB-API symbols from jdbc2.core for convenience.
-- Imports the SQLAlchemy dialect module to ensure the dialect is registered
-  with SQLAlchemy's plugin registry when the package is imported.
+- Optionally imports the SQLAlchemy dialect module for side-effect registration
+  when SQLAlchemy is installed. If SQLAlchemy is not installed, jdbc2 remains
+  fully usable as a DB-API 2.0 driver without raising ImportError.
 """
 from __future__ import annotations
 
@@ -18,8 +19,10 @@ from .core import (
     paramstyle,
 )
 
-# Import the dialect module for its side-effect: it registers the "jdbc2" dialect
-# with SQLAlchemy's dialect registry. Without this, users may see
-# sqlalchemy.exc.NoSuchModuleError: Can't load plugin: sqlalchemy.dialects:jdbc2
-# if the dialect module hasn't been imported via entry points.
-from . import sqlalchemy_dialect as _jdbc2_sa_dialect  # noqa: F401
+# Attempt to import the SQLAlchemy dialect for its side-effect: it registers the
+# "jdbc2" dialect with SQLAlchemy's dialect registry. This is optional; if
+# SQLAlchemy (or the dialect's dependencies) aren't installed, just skip.
+try:  # pragma: no cover - optional integration
+    from . import sqlalchemy_dialect as _jdbc2_sa_dialect  # noqa: F401
+except Exception:  # broad except to avoid import-time failures when optional
+    pass

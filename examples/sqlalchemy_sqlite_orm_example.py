@@ -93,8 +93,7 @@ def main() -> None:
 
     engine = create_engine(
         "jdbc2://",
-        creator=lambda: connect(jdbc_url=jdbc_url, driver=driver, jars=[str(jar_path)]),
-    )
+        jdbc_url=jdbc_url, driver=driver, jars=[str(jar_path)])
 
     # Create tables
     Base.metadata.create_all(engine)

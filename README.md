@@ -34,17 +34,15 @@ Using with SQLAlchemy
 - Create an engine using a creator that returns a jdbc2.core.Connection.
 
 Example (SQLAlchemy + SQLite):
-    from sqlalchemy import create_engine, text
-    from jdbc2.core import connect
+    from sqlalchemy import create_engine, text 
 
     jdbc_url = r"jdbc:sqlite:C:\\tmp\\sa_demo.db"
     driver = "org.sqlite.JDBC"
     jar = r"C:\\path\\to\\sqlite-jdbc-3.45.3.0.jar"
 
     engine = create_engine(
-        "jdbc2://",  # placeholder; real connection is provided by creator
-        creator=lambda: connect(jdbc_url=jdbc_url, driver=driver, jars=[jar]),
-    )
+        "jdbc2://",  # placeholder; real connection is provided by the args
+        (jdbc_url=jdbc_url, driver=driver, jars=[jar])
 
     with engine.begin() as conn:
         res = conn.execute(text("select 1 as x"))
@@ -65,6 +63,56 @@ Run SQLAlchemy examples:
 
 Documentation
 - See doc\index.md for detailed instructions, configuration, and troubleshooting.
+
+Quick reference: JDBC URLs and drivers (common databases)
+- SQLite
+  - Driver: org.sqlite.JDBC
+  - URL: jdbc:sqlite:C:\\path\\to\\file.db
+  - JAR: Xerial SQLite JDBC (sqlite-jdbc-<version>.jar)
+- PostgreSQL
+  - Driver: org.postgresql.Driver
+  - URL: jdbc:postgresql://localhost:5432/yourdb
+  - JAR: postgresql-<version>.jar
+- MySQL
+  - Driver: com.mysql.cj.jdbc.Driver
+  - URL: jdbc:mysql://localhost:3306/yourdb?serverTimezone=UTC
+  - JAR: mysql-connector-j-<version>.jar
+- MariaDB
+  - Driver: org.mariadb.jdbc.Driver
+  - URL: jdbc:mariadb://localhost:3306/yourdb
+  - JAR: mariadb-java-client-<version>.jar
+- Microsoft SQL Server
+  - Driver: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  - URL: jdbc:sqlserver://localhost:1433;databaseName=yourdb;encrypt=true;trustServerCertificate=true
+  - JAR: mssql-jdbc-<version>.jar
+- Oracle
+  - Driver: oracle.jdbc.OracleDriver
+  - URL (Service): jdbc:oracle:thin:@//host:1521/servicename
+  - URL (SID):     jdbc:oracle:thin:@host:1521:SID
+  - JAR: ojdbc8.jar (or ojdbc11.jar for newer JDKs)
+- H2
+  - Driver: org.h2.Driver
+  - URL (file): jdbc:h2:C:\\path\\to\\h2db
+  - URL (mem):  jdbc:h2:mem:test;DB_CLOSE_DELAY=-1
+  - JAR: h2-<version>.jar
+- HSQLDB
+  - Driver: org.hsqldb.jdbc.JDBCDriver
+  - URL (file): jdbc:hsqldb:file:C:\\path\\to\\hsqldb
+  - URL (mem):  jdbc:hsqldb:mem:mymemdb
+  - JAR: hsqldb-<version>.jar
+- IBM Db2
+  - Driver: com.ibm.db2.jcc.DB2Driver
+  - URL: jdbc:db2://localhost:50000/YOURDB
+  - JAR: db2jcc4.jar (plus license jar if required)
+- Snowflake
+  - Driver: net.snowflake.client.jdbc.SnowflakeDriver
+  - URL: jdbc:snowflake://<account>.snowflakecomputing.com/?db=YOURDB&schema=PUBLIC&warehouse=COMPUTE_WH&role=SYSADMIN
+  - JAR: snowflake-jdbc-<version>.jar
+- Microsoft Access (via UCanAccess)
+  - Driver: net.ucanaccess.jdbc.UcanaccessDriver
+  - URL: jdbc:ucanaccess://C:/path/to/file.accdb;memory=false
+  - JARs: ucanaccess-<version>.jar and dependencies (jackcess, hsqldb, commons-logging, commons-lang)
+  - Note: Place all dependency JARs on the classpath (pass them in the `jars` list).
 
 Troubleshooting
 - ImportError: Install JPype1 -> pip install jpype1

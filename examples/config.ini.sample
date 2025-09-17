@@ -1,0 +1,15 @@
+# Copy this file to config.ini and adjust paths and credentials as needed.
+
+[sqlite]
+# Path to your SQLite JDBC driver JAR (Xerial)
+jar = C:\\path\\to\\sqlite-jdbc-3.45.3.0.jar
+# Optional explicit DB file path. If omitted, examples create a temp/demo DB.
+# db_path = C:\\tmp\\sqlite_jdbc2_demo.db
+
+[postgres]
+# Path to your PostgreSQL JDBC driver JAR
+jar = C:\\path\\to\\postgresql-42.7.4.jar
+# Connection details
+url = jdbc:postgresql://localhost:5432/postgres
+user = postgres
+password = postgres

@@ -35,6 +35,62 @@ with connect(jdbc_url="jdbc:...", driver="com.vendor.Driver", jars=[r"C:\\path\\
     print(cur.fetchall())
 ```
 
+## Quick reference: JDBC connection strings and drivers
+
+Below are common JDBC URLs, driver class names, and notes. Supply these to jdbc2.core.connect along with the path(s) to the driver JAR(s) via the jars parameter.
+
+- SQLite
+  - Driver: org.sqlite.JDBC
+  - URL: jdbc:sqlite:C:\\path\\to\\file.db
+  - Driver JAR: Xerial SQLite JDBC (https://github.com/xerial/sqlite-jdbc)
+- PostgreSQL
+  - Driver: org.postgresql.Driver
+  - URL: jdbc:postgresql://localhost:5432/yourdb
+  - Driver JAR: https://jdbc.postgresql.org/
+- MySQL
+  - Driver: com.mysql.cj.jdbc.Driver
+  - URL: jdbc:mysql://localhost:3306/yourdb?serverTimezone=UTC
+  - Driver JAR: https://dev.mysql.com/downloads/connector/j/
+- MariaDB
+  - Driver: org.mariadb.jdbc.Driver
+  - URL: jdbc:mariadb://localhost:3306/yourdb
+  - Driver JAR: https://mariadb.com/kb/en/about-mariadb-connector-j/
+- Microsoft SQL Server
+  - Driver: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  - URL: jdbc:sqlserver://localhost:1433;databaseName=yourdb;encrypt=true;trustServerCertificate=true
+  - Driver JAR: https://learn.microsoft.com/sql/connect/jdbc/microsoft-jdbc-driver-for-sql-server
+- Oracle
+  - Driver: oracle.jdbc.OracleDriver
+  - URL (Service): jdbc:oracle:thin:@//host:1521/servicename
+  - URL (SID):     jdbc:oracle:thin:@host:1521:SID
+  - Driver JAR: ojdbc8/ojdbc11 (https://www.oracle.com/database/technologies/appdev/jdbc-downloads.html)
+- H2
+  - Driver: org.h2.Driver
+  - URL (file): jdbc:h2:C:\\path\\to\\h2db
+  - URL (mem):  jdbc:h2:mem:test;DB_CLOSE_DELAY=-1
+  - Driver JAR: https://h2database.com/
+- HSQLDB
+  - Driver: org.hsqldb.jdbc.JDBCDriver
+  - URL (file): jdbc:hsqldb:file:C:\\path\\to\\hsqldb
+  - URL (mem):  jdbc:hsqldb:mem:mymemdb
+  - Driver JAR: http://hsqldb.org/
+- IBM Db2
+  - Driver: com.ibm.db2.jcc.DB2Driver
+  - URL: jdbc:db2://localhost:50000/YOURDB
+  - Driver JAR: IBM Data Server Driver for JDBC and SQLJ
+- Snowflake
+  - Driver: net.snowflake.client.jdbc.SnowflakeDriver
+  - URL: jdbc:snowflake://<account>.snowflakecomputing.com/?db=YOURDB&schema=PUBLIC&warehouse=COMPUTE_WH&role=SYSADMIN
+  - Driver JAR: https://docs.snowflake.com/en/developer-guide/jdbc/jdbc
+- Microsoft Access (via UCanAccess)
+  - Driver: net.ucanaccess.jdbc.UcanaccessDriver
+  - URL: jdbc:ucanaccess://C:/path/to/file.accdb;memory=false
+  - JARs: ucanaccess-<ver>.jar plus dependencies (jackcess, hsqldb, commons-logging, commons-lang)
+  - Download: http://ucanaccess.sourceforge.net/site.html
+  - Note: Put all required JARs on the classpath by passing them in the jars list.
+
+On Windows, remember to escape backslashes in Python strings (e.g., r"C:\\path\\to\\driver.jar").
+
 ## Running the examples
 
 Examples are configured via a local INI file at `examples\config.ini`. A template is provided as `examples\config.ini.sample` — copy it to `config.ini` in the same folder and edit the paths and settings.
@@ -97,9 +153,8 @@ driver = "org.sqlite.JDBC"
 jar = r"C:\\path\\to\\sqlite-jdbc-3.50.3.0.jar"
 
 engine = create_engine(
-    "jdbc2://",  # DSN placeholder; actual connection comes from creator
-    creator=lambda: connect(jdbc_url=jdbc_url, driver=driver, jars=[jar]),
-)
+    "jdbc2://",  # DSN placeholder; actual connection comes from args
+    jdbc_url=jdbc_url, driver=driver, jars=[jar])
 
 with engine.begin() as conn:
     res = conn.execute(text("select 1 as x"))
