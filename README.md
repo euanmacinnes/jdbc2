@@ -1,5 +1,15 @@
 jdbc2 — Minimal Python DB‑API over JDBC (with SQLAlchemy support)
 
+** NOTE: SQL Alchemy support is via args right now, not through a single URL. **
+
+Installation
+- Stable (PyPI):
+  - pip install jdbc2
+- With optional SQLAlchemy support:
+  - pip install "jdbc2[sqlalchemy]"
+- From source (in repo root):
+  - pip install .
+
 Overview
 - jdbc2 is a lightweight, experimental DB‑API 2.0 driver that talks to databases via JDBC using JPype.
 - Includes a minimal SQLAlchemy dialect so you can use SQLAlchemy by supplying a creator.

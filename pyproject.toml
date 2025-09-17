@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "jdbc2"
-version = "0.1.1"
+version = "0.1.2"
 description = "Minimal Python DB-API 2.0 over JDBC via JPype, with a lightweight SQLAlchemy dialect"
 readme = "README.md"
 authors = [
