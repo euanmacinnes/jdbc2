@@ -1,2 +1,7 @@
 __pycache__
+.
+build
+.venv
+dist
 .idea
+jdbc2.egg-info
