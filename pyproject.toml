@@ -3,12 +3,12 @@ requires = ["setuptools>=61", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "jdbc2"
+name = "JDBC2"
 version = "0.1.2"
 description = "Minimal Python DB-API 2.0 over JDBC via JPype, with a lightweight SQLAlchemy dialect"
 readme = "README.md"
 authors = [
-  { name = "jdbc2 Authors" }
+  { name = "Euan D. Macinnes" }
 ]
 license = { text = "MIT" }
 requires-python = ">=3.8"
