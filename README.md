@@ -23,6 +23,7 @@ Requirements
 - JPype1 (pip install jpype1)
 - A JDBC driver JAR for your target database (e.g., Xerial SQLite JAR, PostgreSQL JAR)
 - On Windows, use backslashes in paths (e.g., C:\path\to\driver.jar)
+- A Java Install (17 or later. 17 is tested, windows and linux)
 
 Quickstart (DB‑API)
 - Connect using jdbc2.core.connect and pass the JDBC URL, driver class, and the JAR path(s).
